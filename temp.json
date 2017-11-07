@@ -1,0 +1,53 @@
+{
+    "host": "DUT",
+    "port": 50051,
+    "influx" : {
+        "server" : "127.0.0.1",
+        "port" : 8086,
+        "dbname" : "Juniper",
+        "user" : "influx",
+        "password" : "influxdb",
+	"recreate" : true,
+	"measurement" : "OC"
+    },
+    "paths": [{
+        "path": "/interfaces",
+        "freq": 2000
+    },{
+        "path": "/arp-information/ipv4",
+        "freq": 10000
+    }, {
+        "path": "/bgp",
+        "freq": 10000
+    },{
+        "path": "/components",
+        "freq": 10000
+    },{
+        "path": "/junos/rsvp-interface-information/",
+        "freq": 10000
+    },{
+        "path": "/junos/system/linecard/firewall/",
+        "freq": 10000
+    },{
+        "path": "/junos/system/linecard/npu/memory/",
+        "freq": 10000
+    },{
+        "path": "/junos/system/linecard/optics/",
+        "freq": 10000
+    },{
+        "path": "/junos/task-memory-information/task-memory-overall-report/",
+        "freq": 10000
+    },{
+        "path": "/lacp",
+        "freq": 10000
+    },{
+        "path": "/lldp",
+        "freq": 10000
+    },{
+        "path": "/mpls/lsps/constrained-path",
+        "freq": 10000
+    },{
+        "path": "/nd6-information/ipv6",
+        "freq": 10000
+    }]
+}

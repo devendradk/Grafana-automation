@@ -1,0 +1,68 @@
+---
+
+- hosts: all
+  become: true 
+  
+  tasks:
+     - name: Remove "influxdb" package
+       apt: name=influxdb state=absent
+
+     - name: download influxdb
+       get_url: url="https://dl.influxdata.com/influxdb/releases/influxdb_1.3.6_amd64.deb" dest=/home/ashwinak/grpc/download/influxdb_1.3.6_amd64.deb mode=0755
+
+     - name: Install influxdb
+       apt: deb="/home/ashwinak/grpc/download/influxdb_1.3.6_amd64.deb"
+    
+     - name: Remove "Grafana" package
+       apt: name=grafana-server state=absent
+
+     - name: download grafana-server
+       get_url: url="https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana_4.5.2_amd64.deb" dest=/home/ashwinak/grpc/download/grafana_4.5.2_amd64.deb mode=0755
+
+     - name: Install Grafana
+       apt: deb="/home/ashwinak/grpc/download/grafana_4.5.2_amd64.deb"
+        
+     - name: download Go
+       get_url: url="https://storage.googleapis.com/golang/go1.9.1.linux-amd64.tar.gz" dest=/home/ashwinak/grpc/download/go1.9.1.linux-amd64.tar.gz mode=0755
+
+     - name: Extract Go
+       unarchive: src="/home/ashwinak/grpc/download/go1.9.1.linux-amd64.tar.gz" dest="/usr/local" copy=no
+     
+#     - name: Export
+#       command: "export PATH={{'$'}}PATH{{':'}}/usr/local/go/bin"
+#
+#     - name: Copy Go-Client
+#       copy: src=grpc-telemetry-client dest=/home/ashwinak/grpc/gtc/grpc-telemetry-client mode=0755
+#
+#     - name: Copy Create-json
+#       copy: src=createjson.sh dest=/home/ashwinak/grpc/gtc/createjson.sh mode=0755
+#
+#     - name: Copy hosts.txt
+#       copy: src=hosts.txt dest=/home/ashwinak/grpc/gtc/hosts.txt mode=0755
+#       
+#     - name: Copy start.sh
+#       copy: src=start.sh dest=/home/ashwinak/grpc/gtc/start.sh mode=0755
+#
+#     - name: Copy temp.json
+#       copy: src=temp.json dest=/home/ashwinak/grpc/gtc/temp.json mode=0755
+#       
+#     - name: Update bashrc for PythonBrew for foo user
+#       lineinfile:
+#         dest=/home/foo/.bashrc
+#         backup=yes
+#         line="[[ -s ${pythonbrew.bashrc_path} ]] && source ${pythonbrew.bashrc_path}"
+#         owner=foo
+#         regexp='^'
+#         state=present
+#         insertafter=EOF
+#         create=True
+#       
+     - name: Start influxdb
+       service: 
+        name: influxdb
+        state: started
+      
+     - name: Start grafana-server
+       service: 
+        name: grafana-server
+        state: started
